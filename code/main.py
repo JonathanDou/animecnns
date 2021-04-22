@@ -8,7 +8,7 @@ from tensorflow.keras.layers import \
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 
-size = 32
+size = 128
 
 def load_images_from_folder(folder):
 
@@ -97,9 +97,9 @@ datagen.fit(traindata)
 
 model = tf.keras.Sequential([
     Conv2D(6, 3, activation='relu'),
-    AveragePooling2D(2),
+    MaxPool2D(2),
     Conv2D(16, 3, activation='relu'),
-    AveragePooling2D(2),
+    MaxPool2D(2),
     Flatten(),
     Dense(120, activation='relu'),
     Dense(84, activation='relu'),
