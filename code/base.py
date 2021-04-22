@@ -5,11 +5,11 @@ import cv2
 import os
 
 from tensorflow.keras.layers import \
-    Conv2D, MaxPool2D, Dropout, Flatten, Dense
+    Conv2D, MaxPool2D, Dropout, Flatten, Dense, AveragePooling2D
     
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-size = 64
+size = 32
 
 def load_images_from_folder(folder):
 
@@ -52,25 +52,16 @@ indices = np.arange(len(testdata))
 testdata = testdata[indices]
 testlabels = testlabels[indices]
 
-datagen = ImageDataGenerator(
-    rotation_range=10,
-    zoom_range=0.1,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    shear_range=0.1,
-    horizontal_flip=True,
-    fill_mode="nearest")
-
-datagen.fit(traindata)
-
 
 model = tf.keras.Sequential([
-    Conv2D(32, 3, 1, activation='relu'),
-    MaxPool2D(2),
+    Conv2D(6, 3, activation='relu'),
+    AveragePooling2D(2),
+    Conv2D(16, 3, activation='relu'),
+    AveragePooling2D(2),
     Flatten(),
-    Dropout(0.2),
-    Dense(128, activation='relu'),
-    Dense(1, activation='sigmoid')
+    Dense(120, activation='relu'),
+    Dense(84, activation='relu'),
+    Dense(10, activation='softmax')
 ])
 
 
@@ -79,14 +70,9 @@ model.compile(optimizer='Adam',
               metrics=['accuracy'])
 
 
-# model.fit(datagen.flow(traindata, trainlabels, batch_size=10),
-#           steps_per_epoch=int(len(traindata) / 10),
-#           epochs=25,
-#           verbose=1,
-#           validation_data=(testdata, testlabels))
 
 model.fit(traindata, trainlabels,
           batch_size=10,
-          epochs=25,
+          epochs=50,
           verbose=1,
           validation_data=(testdata, testlabels))
