@@ -116,8 +116,8 @@ model.compile(optimizer='Adam',
               metrics=['accuracy'])
               
 
-model.fit(datagen.flow(traindata, trainlabels, batch_size=16),
-          steps_per_epoch=int(len(traindata) / 16),
+model.fit(datagen.flow(traindata, trainlabels, batch_size=5),
+          steps_per_epoch=int(len(traindata) / 5),
           epochs=200,
           verbose=1,
           validation_data=(testdata, testlabels))
