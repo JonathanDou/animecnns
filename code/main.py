@@ -3,12 +3,12 @@ import numpy as np
 import random
 import cv2
 from tensorflow.keras.layers import \
-    Conv2D, MaxPool2D, Dropout, Flatten, Dense
+    Conv2D, MaxPool2D, Dropout, Flatten, Dense, AveragePooling2D
     
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 
-size = 256
+size = 128
 
 def load_images_from_folder(folder):
 
@@ -96,11 +96,11 @@ datagen = ImageDataGenerator(
 datagen.fit(traindata)
 
 model = tf.keras.Sequential([
+    Conv2D(8, 3, 1, activation='relu'),
+    MaxPool2D(2),
+    Conv2D(16, 3, 1, activation='relu'),
+    MaxPool2D(2),
     Conv2D(32, 3, 1, activation='relu'),
-    MaxPool2D(2),
-    Conv2D(64, 3, 1, activation='relu'),
-    MaxPool2D(2),
-    Conv2D(128, 3, 1, activation='relu'),
     MaxPool2D(2),
     Flatten(),
     Dropout(0.2),
