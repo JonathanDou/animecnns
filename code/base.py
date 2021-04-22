@@ -55,13 +55,14 @@ testlabels = testlabels[indices]
 
 model = tf.keras.Sequential([
     Conv2D(6, 3, activation='relu'),
-    AveragePooling2D(2),
+    AveragePooling2D(),
     Conv2D(16, 3, activation='relu'),
-    AveragePooling2D(2),
+    AveragePooling2D(),
     Flatten(),
+    Dropout(0.2),
     Dense(120, activation='relu'),
     Dense(84, activation='relu'),
-    Dense(1, activation='softmax')
+    Dense(1, activation='sigmoid')
 ])
 
 
