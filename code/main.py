@@ -97,9 +97,9 @@ datagen.fit(traindata)
 
 model = tf.keras.Sequential([
     Conv2D(6, 3, activation='relu'),
-    MaxPool2D(2),
+    AveragePooling2D(2),
     Conv2D(16, 3, activation='relu'),
-    MaxPool2D(2),
+    AveragePooling2D(2),
     Flatten(),
     Dense(120, activation='relu'),
     Dense(84, activation='relu'),
