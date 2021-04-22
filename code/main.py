@@ -99,7 +99,7 @@ datagen.fit(traindata)
 model = tf.keras.Sequential()
 
 model = tf.keras.Sequential([
-    Conv2D(32, 3, activation='relu'),
+    Conv2D(32, 3, input_shape=(128,128,3),activation='relu'),
     MaxPool2D(2, strides=2),
     Conv2D(64, 3, activation='relu'),
     MaxPool2D(2, strides=2),
