@@ -61,7 +61,7 @@ model = tf.keras.Sequential([
     Flatten(),
     Dense(120, activation='relu'),
     Dense(84, activation='relu'),
-    Dense(10, activation='softmax')
+    Dense(1, activation='softmax')
 ])
 
 
