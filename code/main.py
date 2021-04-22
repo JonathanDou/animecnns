@@ -108,7 +108,7 @@ model = tf.keras.Sequential([
 
 
 
-model.compile(optimizer='Adam',
+model.compile(optimizer='SGD',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
               

@@ -59,7 +59,6 @@ model = tf.keras.Sequential([
     Conv2D(16, 3, activation='relu'),
     AveragePooling2D(),
     Flatten(),
-    Dropout(0.2),
     Dense(120, activation='relu'),
     Dense(84, activation='relu'),
     Dense(1, activation='sigmoid')
@@ -70,10 +69,10 @@ model.compile(optimizer='Adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-
-
 model.fit(traindata, trainlabels,
-          batch_size=10,
+          batch_size=5,
           epochs=50,
           verbose=1,
           validation_data=(testdata, testlabels))
+
+model.summary()
