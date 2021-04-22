@@ -106,7 +106,7 @@ model = tf.keras.Sequential([
     Conv2D(128, 3, activation='relu'),
     MaxPool2D(2, strides=2),
     Flatten(),
-    Dropout(0.3),
+    Dropout(0.2),
     Dense(64, activation='relu'),
     Dense(10, activation='softmax')
 ])
@@ -121,3 +121,5 @@ model.fit(datagen.flow(traindata, trainlabels, batch_size=5),
           epochs=200,
           verbose=1,
           validation_data=(testdata, testlabels))
+
+model.summary()
