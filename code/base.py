@@ -4,14 +4,18 @@ import random
 import cv2
 import os
 
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
 from tensorflow.keras.layers import \
     Conv2D, MaxPool2D, Dropout, Flatten, Dense, AveragePooling2D
     
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 size = 32
+oimages = [] 
 
-def load_images_from_folder(folder):
+def load_images_from_folder(folder, test):
 
     images = []
 
@@ -21,17 +25,20 @@ def load_images_from_folder(folder):
         if img is not None:
 
             #preprocess
-
+            
+            if test:
+                oimages.append(img)
+                
             img = cv2.resize(img, (size, size)) 
             img = img / 255
             images.append(img)
 
     return images
 
-traingirls = load_images_from_folder("../traindata/girls")
-trainguys = load_images_from_folder("../traindata/guys")
-testgirls = load_images_from_folder("../testdata/girls")
-testguys = load_images_from_folder("../testdata/guys")
+traingirls = load_images_from_folder("../traindata/girls", False)
+trainguys = load_images_from_folder("../traindata/guys", False)
+testgirls = load_images_from_folder("../testdata/girls", True)
+testguys = load_images_from_folder("../testdata/guys", True)
 
 traindata = traingirls + trainguys  
 testdata = testgirls + testguys 
@@ -51,6 +58,9 @@ indices = np.arange(len(testdata))
 
 testdata = testdata[indices]
 testlabels = testlabels[indices]
+
+oimages = np.array(oimages)
+oimages = oimages[indices]
 
 
 model = tf.keras.Sequential([
@@ -76,3 +86,14 @@ model.fit(traindata, trainlabels,
           validation_data=(testdata, testlabels))
 
 model.summary()
+
+predicted = model.predict(testdata).T  
+
+result = np.absolute(np.array(testlabels).T-predicted)
+
+
+for i in range(len(result)):
+    if not result[0][i] == 0:
+        plt.imshow(oimages[i])
+        
+plt.show()
