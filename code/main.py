@@ -100,7 +100,7 @@ model = tf.keras.Sequential()
 model = tf.keras.Sequential([
     Conv2D(8, 3, activation='relu'),
     MaxPool2D(),
-    Conv2D(16, 3, activation='relu'),
+    Conv2D(16, 5, activation='relu'),
     MaxPool2D(),
     Flatten(),
     Dense(120, activation='relu'),
