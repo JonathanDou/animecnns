@@ -107,7 +107,7 @@ model = tf.keras.Sequential([
     MaxPool2D(2, strides=2),
     Flatten(),
     Dropout(0.2),
-    Dense(64, activation='relu'),
+    Dense(128, activation='relu'),
     Dense(10, activation='softmax')
 ])
 
