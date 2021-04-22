@@ -4,6 +4,13 @@ import random
 import cv2
 import os
 
+from tensorflow.keras.layers import \
+    Conv2D, MaxPool2D, Dropout, Flatten, Dense
+    
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+size = 32
+
 def load_images_from_folder(folder):
 
     images = []
@@ -13,10 +20,9 @@ def load_images_from_folder(folder):
 
         if img is not None:
 
-            #convert to grayscale and preprocess
+            #preprocess
 
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img = cv2.resize(img, (28, 28)) 
+            img = cv2.resize(img, (size, size)) 
             img = img / 255
             images.append(img)
 
@@ -46,10 +52,25 @@ indices = np.arange(len(testdata))
 testdata = testdata[indices]
 testlabels = testlabels[indices]
 
+datagen = ImageDataGenerator(
+    rotation_range=10,
+    zoom_range=0.1,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    shear_range=0.1,
+    horizontal_flip=True,
+    fill_mode="nearest")
+
+datagen.fit(traindata)
+
+
 model = tf.keras.Sequential([
-    tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(1, activation='sigmoid')
+    Conv2D(32, 3, 1, activation='relu'),
+    MaxPool2D(2),
+    Flatten(),
+    Dropout(0.2),
+    Dense(128, activation='relu'),
+    Dense(1, activation='sigmoid')
 ])
 
 
@@ -58,8 +79,14 @@ model.compile(optimizer='Adam',
               metrics=['accuracy'])
 
 
+# model.fit(datagen.flow(traindata, trainlabels, batch_size=10),
+#           steps_per_epoch=int(len(traindata) / 10),
+#           epochs=25,
+#           verbose=1,
+#           validation_data=(testdata, testlabels))
+
 model.fit(traindata, trainlabels,
           batch_size=10,
-          epochs=20,
+          epochs=25,
           verbose=1,
           validation_data=(testdata, testlabels))

@@ -3,12 +3,12 @@ import numpy as np
 import random
 import cv2
 from tensorflow.keras.layers import \
-    Conv2D, MaxPool2D, Dropout, Flatten, Dense, BatchNormalization
+    Conv2D, MaxPool2D, Dropout, Flatten, Dense
     
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 
-resizeshape = 128
+size = 256
 
 def load_images_from_folder(folder):
 
@@ -21,7 +21,7 @@ def load_images_from_folder(folder):
 
             #preprocess
             
-            img = cv2.resize(img, (resizeshape, resizeshape)) 
+            img = cv2.resize(img, (size, size)) 
             img = img / 255
             
             images.append(img)
@@ -103,7 +103,7 @@ model = tf.keras.Sequential([
     Conv2D(128, 3, 1, activation='relu'),
     MaxPool2D(2),
     Flatten(),
-    Dropout(0.3),
+    Dropout(0.2),
     Dense(64, activation='relu'),
     Dense(10, activation='softmax')
 ])
