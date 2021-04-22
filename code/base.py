@@ -9,7 +9,7 @@ from tensorflow.keras.layers import \
     
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-size = 32
+size = 64
 
 def load_images_from_folder(folder):
 
