@@ -85,11 +85,11 @@ testdata = testdata[indices]
 testlabels = testlabels[indices]
 
 datagen = ImageDataGenerator(
-    rotation_range=10,
-    zoom_range=0.1,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    shear_range=0.1,
+    rotation_range=20,
+    zoom_range=0.2,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
     horizontal_flip=True,
     fill_mode="nearest")
 
@@ -103,7 +103,7 @@ model = tf.keras.Sequential([
     Conv2D(128, 3, 1, activation='relu'),
     MaxPool2D(2),
     Flatten(),
-    Dropout(0.2),
+    Dropout(0.3),
     Dense(64, activation='relu'),
     Dense(10, activation='softmax')
 ])
