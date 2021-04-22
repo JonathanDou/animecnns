@@ -8,7 +8,7 @@ from tensorflow.keras.layers import \
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 
-resizeshape = 64
+resizeshape = 128
 
 def load_images_from_folder(folder):
 
@@ -117,6 +117,6 @@ model.compile(optimizer='Adam',
 
 model.fit(datagen.flow(traindata, trainlabels, batch_size=10),
           steps_per_epoch=int(len(traindata) / 10),
-          epochs=50,
+          epochs=100,
           verbose=1,
           validation_data=(testdata, testlabels))
